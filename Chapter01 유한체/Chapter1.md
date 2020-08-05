@@ -91,5 +91,5 @@ class FieldElement:
             return False
         return self.num == other.num and self.prime == other.prime  ➌
 ```
-> ➊ num과 prime을 인수로 받은 후 num 값이 경곗값을 포함하여 0과 prime-1 사이 값인지조사.
->   그렇지 않은 경우 유효하지 않은 FieldElement를 얻게 되므로 ValueError를 발생
+> ➊ num과 prime을 인수로 받은 후 num 값이 경곗값을 포함하여 0과 prime-1 사이 값인지조사.   
+>    그렇지 않은 경우 유효하지 않은 FieldElement를 얻게 되므로 ValueError를 발생
