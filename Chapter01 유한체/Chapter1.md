@@ -72,3 +72,22 @@ F₉₈₃ = {0, 1, 2, ... 982}
 유한체는 반드시 소수이거나 소수의 거듭제곱을 위수로 가져야 함.
 
 ## 1.3.1 파이썬으로 유한체 
+유한체 원소 1개를 표현하는 클래스를 정의. 클래스 이름은 FieldElement.
+```
+class FieldElement:
+  
+    def __init__(self, num, prime):
+        if num >= prime or num < 0:  ①
+            error = 'Num {} not in field range 0 to {}'.format(
+                num, prime - 1)
+        self.num = num  ②
+        self.prime = prime
+  
+    def __repr__(self):
+        return 'FieldElement_{}({})'.format(self.prime, self.num)
+        
+    def __eq__(self, other):
+        if other is None:
+            return False
+        return self.num == other.num and self.prime == other.prime  ③
+```
