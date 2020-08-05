@@ -93,6 +93,6 @@ class FieldElement:
 ```
 > ➊ num과 prime을 인수로 받은 후 num 값이 경곗값을 포함하여 0과 prime-1 사이 값인지조사   
 > 그렇지 않은 경우 유효하지 않은 FieldElement를 얻게 되므로 ValueError를 발생    
-> ➋ __inint__ 메서드의 나머지 부분에서 조사된 인수 값으로 객체를 초기화   
+> ➋ __init 메서드의 나머지 부분에서 조사된 인수 값으로 객체를 초기화   
 > ➌ __eq__ 메서드는 FieldElement 클래스의 두 개체가 같은지 검사   
 > 객체의 num과 prime 속성이 서로 같은 경우에만 True 값을 반환
