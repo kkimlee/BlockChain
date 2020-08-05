@@ -77,10 +77,10 @@ F₉₈₃ = {0, 1, 2, ... 982}
 class FieldElement:
   
     def __init__(self, num, prime):
-        if num >= prime or num < 0:  ①
+        if num >= prime or num < 0:  ➊
             error = 'Num {} not in field range 0 to {}'.format(
                 num, prime - 1)
-        self.num = num  ②
+        self.num = num  ➋
         self.prime = prime
   
     def __repr__(self):
@@ -89,5 +89,6 @@ class FieldElement:
     def __eq__(self, other):
         if other is None:
             return False
-        return self.num == other.num and self.prime == other.prime  ③
+        return self.num == other.num and self.prime == other.prime  ➌
 ```
+> ➊ num과 prime을 인수로 받은 후 num 값이 경곗값을 포함하여 0과 prime-1 사이 값인지조사.   그렇지 않은 경우 유효하지 않은 FieldElement를 얻게 되므로 ValueError를 발생
