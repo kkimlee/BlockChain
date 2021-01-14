@@ -428,4 +428,67 @@ n<sup>(p-1)</sup>%p = 1
 <pre>
 a/b = a •<sub>f</sub>(1/b) = a •<sub>f</sub> b<sup>-1</sup>
 </pre>
-b<sup>-1</sup>를 계산하는데 페르마의 소정리가 활용됨
+b<sup>-1</sup>를 계산하는데 페르마의 소정리가 활용됨. 페르마의 소정리에 따르면
+<pre>
+b<sup>(p-1)</sup> = 1
+</pre>
+이고 p는 소수이므로
+<pre>
+b<sup>p-1</sup> = b<sup>p-1</sup> •<sub>f</sub> 1 = b<sup>-1</sup> •<sub>f</sub> b<sup>(p-1)</sup> = b<sup>(p-2)</sup>
+</pre>
+이고, 이를 요약하면
+<pre>
+b<sup>-1</sup> = b<sup>(p-2)</sup>
+</pre>
+이므로, 유한체 F<sub>19</sub>에서 0이 아닌 모든 원소 b에 대해 b<sup>18</sup> = 1을 의미하므로 b<sup>-1</sup> = b<sup>17</sup>임    
+따라서 어떤 원소 b의 역원 b<sup>-1</sup>은 거듭제곱을 통해 계산 가능함.    
+예를 들어 F<sub>19</sub>에서
+<pre>
+2/7 = 2 • 7<sup>(19 - 2)</sup> = 2 • 7<sup>17</sup> = 465261027974414%19 = 3
+7/5 = 7 • 5<sup>(19 - 2)</sup> = 7 • 5<sup>17</sup> = 5340576171875%19 = 9
+</pre>
+
+### 연습문제 1.8
+F<sub>31</sub>에서 다음 연산식을 계산하시오
+* 3 /<sub>f</sub> 24
+* 17<sup>-3</sup>
+* 4<sup>-4</sup> •<sub>f</sub> 11
+
+### 연습문제 1.9
+두 유한체 원소간의 나눗셈을 정의하는 __truediv__ 메서드를 작성하시오.    
+파이썬 3에서 나눗셈 연산을 정의하는 메서드는 __truediv__(/)와 __floordiv__(//) 2개가 있음.
+
+# 1.8 rjemqwprhq 메서드 수정
+이전에 정의한 거듭제곱 메서드(__pow__)는 a<sup>-3</sup>과 같은 음의 거듭제곱을 계산할 때 오류가 발생함.    
+파이썬 내장함수 pow()는 음의 거듭제곱을 처리할 수 없기 때문임.    
+문제 해결을 위해 페르마의 소정리를 활용함.    
+<pre>
+a<sup>p-1</sup> = 1
+</pre>
+a<sup>p-1</sup>는 항상 1이며, a<sup>-3</sup>는 다음과 같이 쓸 수 있음
+<pre>
+a<sup>-3</sup> = a<sup>-3</sup> • a<sup>p-1</sup> = a<sup>p-4</sup>
+</pre>
+
+이를 이용하여 코드를 다음과 같이 변환
+```
+    def __pow__(self, exponent):
+        n = exponent
+        while n < 0:
+            n += self.prime - 1 ➊
+        num = pow(self.num, n, self.prime) ➋
+        return self.__class__(num, self.prime)
+```
+> ➊ 양의 지수를 얻을 때까지 self.prim - 1 값을 계속 더함    
+> ➋ 계산 효율이 좋은 내장함수 pow() 사용    
+
+a % p에서와 같이 나머지 연산자를 사용하면 음수인 a값도 0과 p-1 사이의 값으로 변환됨.   
+따라서 음의 거듭제곱에 대해서 self.prim - 1을 계속 더하지 않고 % 연산자를 적용하면 while 루프 없이 코딩이 가능함.    
+이를 이용하여 다음과 같이 코드를 수정
+```
+    def __pow__(self, exponent):
+        n = exponent % (self.prime - 1) ➊
+        num = pow(self.num, n, self.prime)
+        return self.__class__(num, self.prime)
+```
+> 지수를 0과 p-2 사이의 값으로 
