@@ -481,7 +481,7 @@ def __truediv__(self, other):
     return self.__class__(num, self.prime)
 ````
 
-# 1.8 rjemqwprhq 메서드 수정
+# 1.8  메서드 수정
 이전에 정의한 거듭제곱 메서드(__pow__)는 a<sup>-3</sup>과 같은 음의 거듭제곱을 계산할 때 오류가 발생함.    
 파이썬 내장함수 pow()는 음의 거듭제곱을 처리할 수 없기 때문임.    
 문제 해결을 위해 페르마의 소정리를 활용함.    
