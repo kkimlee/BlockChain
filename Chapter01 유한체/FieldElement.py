@@ -44,3 +44,14 @@ class FieldElement:
         n = exponent % (self.exponent - 1)
         num = pow(self.num, n, self.prime)
         return self.__class__(num, self.prime)
+
+    def __truediv__(self, other):
+    if self.prime != other.prime:
+        raise TypeError('Cannot divide two numbers to different Fields')
+    # use Fermat's little theorem:
+    # self.num**(p-1) % p == 1
+    # this means:
+    # 1/n == pow(n, p-2, p)
+    # we return an element of the same class
+    num = self.num * pow(other.num, self.prime - 2, self.prime) % self.prime
+    return self.__class__(num, self.prime)
