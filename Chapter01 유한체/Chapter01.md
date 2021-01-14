@@ -358,6 +358,8 @@ FielElement 클래스에서 __pow__ 메서드를 정의
         num = self.num ** exponent) % self.prime ➊
         return self.__class__(num, self.prime) ➋
 ```
+> ➊ 파이썬의 거듭제곱을 계산하는 pow() 내장함수를 활용하여 pow(self.num, exponent, self.prim)으로 코딩하는 것이 효율적임
+> ➋ 클래스의 인스턴스를 반환
 ```
 >>> from ecc import FieldElement
 >>> a = FieldElement(3, 13)
@@ -398,3 +400,9 @@ F<sub>19</sub>에 이를 적용하면 다음과 같음
 <pre>
 n<sup>(p-1)</sup>%p = 1
 </pre>
+여기서 p는 소수임
+소수를 위수로 하는 유한체를 사용하기 때문에 페르마의 소정리 적용이 가능함.
+
+| 페르마의 소정리 |
+
+
