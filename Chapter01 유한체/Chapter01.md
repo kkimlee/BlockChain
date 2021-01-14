@@ -491,4 +491,4 @@ a % p에서와 같이 나머지 연산자를 사용하면 음수인 a값도 0과
         num = pow(self.num, n, self.prime)
         return self.__class__(num, self.prime)
 ```
-> 지수를 0과 p-2 사이의 값으로 변환
+> ➊ 지수를 0과 p-2 사이의 값으로 변환
