@@ -358,7 +358,7 @@ FielElement 클래스에서 __pow__ 메서드를 정의
         num = self.num ** exponent) % self.prime ➊
         return self.__class__(num, self.prime) ➋
 ```
-> ➊ 파이썬의 거듭제곱을 계산하는 pow() 내장함수를 활용하여 pow(self.num, exponent, self.prim)으로 코딩하는 것이 효율적임
+> ➊ 파이썬의 거듭제곱을 계산하는 pow() 내장함수를 활용하여 pow(self.num, exponent, self.prim)으로 코딩하는 것이 효율적임    
 > ➋ 클래스의 인스턴스를 반환
 ```
 >>> from ecc import FieldElement
@@ -407,4 +407,19 @@ n<sup>(p-1)</sup>%p = 1
 페르마의 소정리
 
 [연습문제 1.5]의 결과를 통해 아래 식에서 유한체 F<sub>p</sub>와 0이 아닌 임의의 원소 n을 유한체의 모든 원소에 각각 곱한 집합이 동일하다는 것을 알수있음
+
+{1, 2, 3, ... p-2, p-1} = {n%p, 2n%p, 3n%p, ... (p-2)n%p, (p-1)n%p}
+
+배열의 순서가 다를 수 있으나 원소는 같음. 따라서 양쪽은 같은 집합이며 원소들의 곱또한 동일함
+
+1 • 2 • 3 • ... • (p-2) • (p-1) % p = n • 2n • 3n • ... • (p-2)n • (p-1)n % p
+
+왼쪽은 (p-1)! % p 이며, !는 계승<sup>factorial</sup>을 뜻함.
+오른쪽은 (p-1)! • n<sup>(p-1)</sup> % p 로 정리 가능함.
+
+(p-1)! % p = (p-1)! • n<sup>(p-1)</sup> % p
+
+로 정리가능하며, 양쪽을 (p-1)!로 약분하면 다음과 같음
+
+1 = n<sup>(p-1)</sup> % p
 </pre>
