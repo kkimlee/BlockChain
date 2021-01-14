@@ -454,9 +454,32 @@ F<sub>31</sub>에서 다음 연산식을 계산하시오
 * 17<sup>-3</sup>
 * 4<sup>-4</sup> •<sub>f</sub> 11
 
+```
+>>> prime = 31
+>>> print(3*pow(24, prime-2, prime) % prime)
+4
+>>> print(pow(17, prime-4, prime))
+29
+>>> print(pow(4, prime-5, prime)*11 % prime)
+13
+```
+
 ### 연습문제 1.9
 두 유한체 원소간의 나눗셈을 정의하는 __truediv__ 메서드를 작성하시오.    
 파이썬 3에서 나눗셈 연산을 정의하는 메서드는 __truediv__(/)와 __floordiv__(//) 2개가 있음.
+
+```
+def __truediv__(self, other):
+    if self.prime != other.prime:
+        raise TypeError('Cannot divide two numbers to different Fields')
+    # use Fermat's little theorem:
+    # self.num**(p-1) % p == 1
+    # this means:
+    # 1/n == pow(n, p-2, p)
+    # we return an element of the same class
+    num = self.num * pow(other.num, self.prime - 2, self.prime) % self.prime
+    return self.__class__(num, self.prime)
+````
 
 # 1.8 rjemqwprhq 메서드 수정
 이전에 정의한 거듭제곱 메서드(__pow__)는 a<sup>-3</sup>과 같은 음의 거듭제곱을 계산할 때 오류가 발생함.    
