@@ -11,6 +11,7 @@ y<sup>2</sup> = x<sup>3</sup> + ax + b
 <pre>
 y = mx + b
 </pre>
+![그림 2-1](./img/그림2-1.png)
 
 2차 방정식은 다음과 같음
 <pre>
