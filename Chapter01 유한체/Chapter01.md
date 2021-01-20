@@ -187,30 +187,6 @@ a-<sub>f</sub>b = (a-b)%p, (a, b ∊ F<sub>p</sub>)
 6-<sub>f</sub>13=(6-13)%19 = 12
 </pre>
 
-### 연습문제 1.2
-유한체 F<sub>57</sub>에서 다음 연산의 결과를 구하시오.
-* 44 +<sub>f</sub> 33
-<pre>
->>> prime = 57
->>> print((44+33)%prime)
-20
-</pre>
-* 9 -<sub>f</sub> 29
-<pre>
->>> print((9-29)%prime)
-37
-</pre>
-* 17 +<sub>f</sub> 42 +<sub>f</sub> 49
-<pre>
->>> print((17+42+49)%prime)
-51
-</pre>
-* 52 -<sub>f</sub> 30 -<sub>f</sub> 38
-<pre>
-print((52-30-38)%prime)
-41
-</pre>
-
 # 1.5.1 파이썬으로 유한체 덧셈과 뺄셈  코딩하기
 FieldElement 클래스에서 __add__와 __sub__ 메서드를 정의.
 ```
@@ -233,15 +209,6 @@ FieldElement 클래스에서 __add__와 __sub__ 메서드를 정의.
 True
 ```
 
-### 연습문제 1.3
-2개의 FieldElement 객체의 뺄셈을 정의하는 __sub__ 메서드를 작성.
-```
-    def __sub__(self, other):
-        if self.prime != other.prime: 
-            raise TypeError('Cannot add two numbers in different Fields')
-        num = (self.num - other.num) % self.prime 
-        return self.__class__(num, self.prime) 
-```
 # 1.6 유한체 곱셈과 거듭제곱
 유한체에서 닫혀 있는 덧셈(+<sub>f</sub>)을 새롭게 정의한것처럼 곱셈에 대해서도 정의.
 정수집합에서의 곱셈은 '여러번 더하기'를 의미
@@ -274,68 +241,9 @@ True
 9<sup>12</sup> = 7
 </pre>
 
-### 연습문제 1.4
-유한체 F<sub>97</sub>에서 다음 곱셈과 거듭제곱을 구하시오.
-* 95 •<sub>f</sub> 45 •<sub>f</sub> 31
-```
->>> prime = 97
->>> print(95*45*31 % prime)
-23
-```
-* 17 •<sub>f</sub> 13 •<sub>f</sub> 19 •<sub>f</sub> 44
-```
->>> print(17*13*19*44 % prime)
-68
-```
-* 127 •<sub>f</sub> 77<sup>49</sup>
-```
->>> print(12**7*77**49 % prime)
-63
-```
-
-### 연습문제 1.5
-k가 각각 1, 3, 7, 13, 18인 경우 F<sub>19</sub>에서 다음 집합을 구하고, 구한 집합에서 어떤 규칙성이 있는지 찾으시오.
-* {k •<sub>f</sub> 0, k •<sub>f</sub> 1, k •<sub>f</sub> 2, k •<sub>f</sub> 3, ... k •<sub>f</sub> 18}
-```
->>> prime = 19
->>> for k in (1, 3, 7, 13, 18):
-...     print([k*i % prime for i in range(prime)])
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-[0, 3, 6, 9, 12, 15, 18, 2, 5, 8, 11, 14, 17, 1, 4, 7, 10, 13, 16]
-[0, 7, 14, 2, 9, 16, 4, 11, 18, 6, 13, 1, 8, 15, 3, 10, 17, 5, 12]
-[0, 13, 7, 1, 14, 8, 2, 15, 9, 3, 16, 10, 4, 17, 11, 5, 18, 12, 6]
-[0, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-
->>> for k in (1, 3, 7, 13, 18):
-...     print(sorted([k*i % prime for i in range(prime)]))
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-```
-결과를 정렬하면, 모두 같은 집합임
-
 ## 1.6.1 파이썬으로 곱셉 코딩하기
 FieldElement 클래스에서 __mul__ 메서드를 정의
 
-### 연습문제 1.6
-2개의 유한체 원소 곱셈을 정의하는 __mul__ 메서드를 작성.
-```
-    def __mul__(self, other):
-        if self.prime != other.prime: 
-            raise TypeError('Cannot add two numbers in different Fields')
-        num = (self.num * other.num) % self.prime 
-        return self.__class__(num, self.prime) 
-```
-```
->>> from FieldElement
->>> a = FieldElement(3, 13)
->>> b = FieldElement(12, 13)
->>> c = FieldElement(10, 13)
->>> print(a*b==c)
-True
-```
 ## 1.6.2 파이썬으로 거듭제곱 코딩하기
 FielElement 클래스에서 __pow__ 메서드를 정의
 ```
@@ -354,17 +262,6 @@ True
 ```
 지수가 유한체 원소일 경우 지수 관련 성질 (예 7<sup>a</sup> • 7<sup>b</sup> = 7<sup>a+b</sup>)이 성립하지 않으므로 지수는 유한체로 한정하지 않음.
 
-### 연습문제 1.7
-7, 11, 17, 31인 p값에 대해 유한체 F<sub>p</sub>에서 다음 집합을 구하시오.
-* {1<sup>(p-1)</sup>, 2<sup>(p-1)</sup>, 3<sup>(p-1)</sup>, 4<sup>(p-1)</sup>, ... (p-1)<sup>(p-1)</sup>}
-```
->>> for prime in (7, 11, 17, 31):
-...     print([pow(i, prime-1, prime) for i in range(1, prime)])
-[1, 1, 1, 1, 1, 1]
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-```
 # 1.7 유한체 나눗셈
 유한체에서 나눗셈은 일반대수에서의 나눗셈과 비교하는 방법을 이용   
 일반대수에서 나눗셈은 곱셈의 역연산   
@@ -432,39 +329,6 @@ b<sup>-1</sup> = b<sup>(p-2)</sup>
 2/7 = 2 • 7<sup>(19 - 2)</sup> = 2 • 7<sup>17</sup> = 465261027974414%19 = 3
 7/5 = 7 • 5<sup>(19 - 2)</sup> = 7 • 5<sup>17</sup> = 5340576171875%19 = 9
 </pre>
-
-### 연습문제 1.8
-F<sub>31</sub>에서 다음 연산식을 계산하시오
-* 3 /<sub>f</sub> 24
-* 17<sup>-3</sup>
-* 4<sup>-4</sup> •<sub>f</sub> 11
-
-```
->>> prime = 31
->>> print(3*pow(24, prime-2, prime) % prime)
-4
->>> print(pow(17, prime-4, prime))
-29
->>> print(pow(4, prime-5, prime)*11 % prime)
-13
-```
-
-### 연습문제 1.9
-두 유한체 원소간의 나눗셈을 정의하는 __truediv__ 메서드를 작성하시오.    
-파이썬 3에서 나눗셈 연산을 정의하는 메서드는 __truediv__(/)와 __floordiv__(//) 2개가 있음.
-
-```
-def __truediv__(self, other):
-    if self.prime != other.prime:
-        raise TypeError('Cannot divide two numbers to different Fields')
-    # use Fermat's little theorem:
-    # self.num**(p-1) % p == 1
-    # this means:
-    # 1/n == pow(n, p-2, p)
-    # we return an element of the same class
-    num = self.num * pow(other.num, self.prime - 2, self.prime) % self.prime
-    return self.__class__(num, self.prime)
-````
 
 # 1.8 거듭제곱 메서드 수정
 이전에 정의한 거듭제곱 메서드(__pow__)는 a<sup>-3</sup>과 같은 음의 거듭제곱을 계산할 때 오류가 발생함.    
