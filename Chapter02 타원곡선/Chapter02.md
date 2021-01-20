@@ -17,11 +17,13 @@ y = mx + b
 <pre>
 y = ax<sup>2</sup> + bx + c
 </pre>
+![그림 2-2](./그림/그림2-2.png)
 
 3차 방정식은 다음과 같음
 <pre>
 y = ax<sup>3</sup> + bx<sup>2</sup> + cx + d
 </pre>
+![그림 2-3](./그림/그림2-3.png)
 
 타원곡선은 다음과 같음
 <pre>
