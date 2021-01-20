@@ -6,14 +6,14 @@
 <pre>
 y<sup>2</sup> = x<sup>3</sup> + ax + b
 </pre>
-
+    
 1차 방정식은 다음과 같음
 <pre>
 y = mx + b
 </pre>
 ![그림 2-1](./그림/그림2-1.png)    
 [그림 2-1] 1차방정식 그래프    
-
+    
 2차 방정식은 다음과 같음
 <pre>
 y = ax<sup>2</sup> + bx + c
