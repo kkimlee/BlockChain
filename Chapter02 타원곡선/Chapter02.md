@@ -59,8 +59,8 @@ class Point:
         return self.x == other.x and self.y == other.y \
             and self.a == other.a. and self.b == other.b
 ```
->> ➊ 주어진 점이 곡선 위에 있는지 검사    
->> ➋ 두 점은 같은 곡선 위에 있고 그 좌푯값이 동일해야만 같다고 판정
+> ➊ 주어진 점이 곡선 위에 있는지 검사    
+> ➋ 두 점은 같은 곡선 위에 있고 그 좌푯값이 동일해야만 같다고 판정
 
 #### 연습문제 2.1
 다음 중 어느 점이 곡선 y<sup>2</sup> = x<sup>3</sup> +5x + 7 위에 있는가?
