@@ -52,9 +52,21 @@ class Point:
         self.b = b
         self.x = x
         self.y = y
-        if self.y**2 != self.x**3 + a * x + b:
+        if self.y**2 != self.x**3 + a * x + b: ➊
             raise ValueError('({}, {}) is not on the curve'.format(x, y))
     
-    def __eq__(self, other):
+    def __eq__(self, other): ➋
         return self.x == other.x and self.y == other.y \
             and self.a == other.a. and self.b == other.b
+```
+>> ➊ 주어진 점이 곡선 위에 있는지 검사
+>> ➋ 두 점은 같은 곡선 위에 있고 그 좌푯값이 동일해야만 같다고 판정
+
+#### 연습문제 2.1
+다음 중 어느 점이 곡선 y<sup>2</sup> = x<sup>3</sup> +5x + 7 위에 있는가?
+<pre>
+    (2, 4), (-1, -1), (18, 77), (5, 7)
+</pre>
+
+#### 연습문제 2.2
+Point 클래스의 __ne__ 메서드를 작성하시오.
