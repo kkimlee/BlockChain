@@ -93,6 +93,18 @@ class Point:
 > ➊ 주어진 점이 곡선 위에 있는지 검사    
 > ➋ 두 점은 같은 곡선 위에 있고 그 좌푯값이 동일해야만 같다고 판정
 
+실행 결과는 다음과 같음
+```
+>>> from ecc import Point
+>>> p1 = Point(-1, -1, 5, 7)
+>>> p2 = Point(-1, -2, 5, 7)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "ecc.py", line 143, in __init__
+    raise ValueError('({}, {}) is not on the curve'.format(self.x, self.y))
+ValueError: (-1, -2) is not on the curve
+```
+
 ## 2.3 두 점의 덧셈
 타원곡선은 두 점의 덧셈(점 덧셈)을 정의하는 데 유용함    
 점 덧셈은 곡선 위의 두 점에 대해 어떤 연산을 거쳐 곡선에 존재하는 제 3의 점을 얻는 과정    
@@ -175,10 +187,82 @@ x축에 수직인 직선과 타원곡선이 만나는 세 번째 점은 영원�
 ![그림 2-17](./그림/그림2-17.png)  
 ###### [그림 2-17] A + (B + C)
 
-## 점 덧셈 코딩하기
+## 2.5 점 덧셈 코딩하기
 점 덧셈을 코딩하기 위해 더하는 두 점은 다음 세 가지 경우로 나눌 수 있음  
 <pre>
     1. 두 점이 x축에 수직인 직선 위에 있는 경우
     2. 두 점이 x축에 수직인 직선 위에 있지 않은 경우
     3. 두 점이 같은 경우 
 </pre>
+
+항등원에 해당하는 무한원점을 다루기 위해 무한대 값을 표현할 필요가 있음.  
+파이썬에서 무한대 값을 표현하기 어렵기 때문에 None 값을 무한원점으로 표현하기로 함  
+이를 위해서 두가지 조건이 필요함
+<pre>
+  1. None 값이 인수로 들어오면 이후의 방정식 로직을 확인하않도록 지 __init__ 메서드 수정
+  2. FieldElement 클래스처럼 덧셈 연산자를 정의하는 __add__ 메서드를 작성
+</pre>
+이에 따라 다음과 같이 Point 클래스를 수정  
+```
+class Point
+  
+    def __init__(self, x, y, a, b):
+        self.a = a
+        self.b = b
+        self.x = x
+        self.y = y
+        if self.x is None and self.y is None : ❶
+            return
+        if self.y**2 != self.x**3 + a * x + b:
+            raise ValueError('({}, {}) is not on the curve'.format(x, y))
+            
+    def __add__(self, other): ❷
+        if self.a != other.a or self.b != other.b:
+            raise TypeError('Point {}, {} are not on the same curve'.format (self, other))
+        if self.x is None: ❸
+            return other
+        if other.x is None: ❹
+            return self
+```
+> ❶ None 값을 갖는 x, y 좌푯값은 무한원점을 의미하므로 다음 if 실행문 이전에 리턴
+> ❷ __add__ 메서드를 정의해서 + 연산자를 재정의
+> ❸ self.x가 None이라는 것은 self가 무한원점, 즉 덧셈에 대한 항등원이라는 뜻이므로 other을 반환
+> ❹ other.x가 None이라는 것은 other가 항등원이라는 뜻이므로 self를 반환
+
+실행 결과는 다음과 같음
+```
+>>> import Point
+>>> p1 = Point(-1, -1, 5, 7)
+>>> P2 = Point(-1, 1 5, 7)
+>>> inf = Point(None, None, 5, 7)
+>>> print(p1 + inf)
+Point(-1,-1)_5_7
+>>> print(-1,1)_5_7
+Point(-1,1)_5_7
+>>> print(p1 + p2)
+Point(infinity)
+```
+
+## 2.6 x<sub>1</sub>≠x<sub>2</sub>인 경우의 점 덧셈
+이전에 x축에 수직인 직선에 대한 덧셈을 정의하였음  
+x가 다른 두점의 덧셈은 두 점을 지나는 직선의 기울기를 이용해 해결 가능함  
+먼저 두 점을 지나는 직선의 기울기를 유도함  
+
+<pre>
+    P<sub>1</sub> = (x<sub>1</sub>, y<sub>1</sub>), P<sub>2</sub> = (x<sub>2</sub>, y<sub>2</sub>), P<sub>3</sub> = (x<sub>3</sub>,y<sub>3</sub>)
+    P<sub>1</sub> + P<sub>2</sub> = P<sub>3</sub>
+    s = (y<sub>2</sub> - y<sub>1</sub>)/(x<sub>2</sub> - x<sub>1</sub>)
+</pre>
+
+s는 기울기로 x<sub>3</sub>를 계산하기 위해 사용됨  
+x<sub>3</sub>을 알면 y<sub>3</sub> 계산 역시 가능함  
+따라서 P<sub>3</sub>는 다음과 같은 공식으로 계산 가능함
+
+<pre>
+    x<sub>3</sub> = s<sub>2</sub> - x<sub>1</sub> - x<sub>2</sub>
+    y<sub>3</sub> = s(x<sub>1</sub> - x<sub>3</sub>) - y<sub>1</sub>
+</pre>
+
+점 덧셈의 결과는 기울기로 구한 점을 x축에 대해 대칭한 것  
+y<sub>3</sub>은 직선이 곡선과 만나는 교점의 y 값과 반대의 부호를 갖게됨  
+
