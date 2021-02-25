@@ -277,7 +277,33 @@ x<sub>3</sub>을 알면 y<sub>3</sub> 계산 역시 가능함
 
 점 덧셈의 결과는 기울기로 구한 점을 x축에 대해 대칭한 것  
 y<sub>3</sub>은 직선이 곡선과 만나는 교점의 y 값과 반대의 부호를 갖게됨  
-
+  
+<pre>
+                                                                        점 덧셈 공식 유도
+    2개의 점 P<sub>1</sub>, P<sub>2</sub>의 덧셈 겨로가가 P<sub>3</sub>이라고 가정
+    
+        P<sub>1</sub> = (x<sub>1</sub>,y<sub>1</sub>), P<sub>2</sub> = (x<sub>2</sub>,y<sub>2</sub>), P<sub>3</sub> = (x<sub>3</sub>,y<sub>3</sub>)
+        P<sub>1</sub> + P<sub>2</sub> = P<sub>3</sub>
+        
+    P<sub>3</sub> 값을 P<sub>1</sub>, P<sub>2</sub>로 표현
+    직선이 P<sub>1</sub>과 P<sub>2</sub>를 지난다느 사실로부터 다음과 같은 공식 유도 가능
+    
+        s = (y<sub>2</sub> - y<sub>1</sub>)/(x<sub>2</sub> - x<sub>1</sub>)
+        y = s(x - x<sub>1</sub>) + y<sub>1</sub>
+        
+    s는 기울기이고 y는 P<sub>1</sub>와 P<sub>2</sub>를 지나는 직선의 방정식임
+    이 공식을 타원곡선의 y에 대입하면 다음과 같은 식을 얻음
+    
+        y<sup>2</sup> = x<sup>3</sup> + ax + b
+        y<sup>2</sup> = (s(x - x<sub>1</sub>) + y<sub>1</sub>)<sup>2</sup> = x<sup>3</sup> + ax + b
+        
+    모든 항을 미지수와 x의 차수에 따라 항을 모아 내림차순으로 정리하면 다음 방정식을 얻음
+    
+        x<sup>3</sup> - s<sup>2</sup>x<sup>2</sup> + (a + 2s<sup>2</sup>x<sub>1</sub> - 2sy<sub>1</sub>)x + b - s<sup>2</sup>x<sub>1</sub><sup>2</sup> + 2sx<sub>1</sub>y<sub>1</sub> - y<sub>1</sub><sup>2</sup> = 0
+        
+    
+        
+    
 ## 2.7 x<sub>1</sub>≠x<sub>2</sub>인 경우의 점 덧셈 코딩하기
 x 좌표가 서로 다른 두 점의 덧셈을 실행하는 코드를 작성  
 이를 위해 __add__ 메서드를 수정함  
