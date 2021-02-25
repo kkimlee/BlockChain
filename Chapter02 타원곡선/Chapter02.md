@@ -326,7 +326,7 @@ P<sub>3</sub>을 구하는 공식은 x<sub>1</sub> = x<sub>2</sub>라는 조건�
     s = (3x<sub>1</sub><sup>2</sup> + a)/(2y<sub>1</sub>
     x<sub>3</sub> = s<sup>2</sup> - 2x<sub>1</sub>
     y<sub>3</sub> = s(x<sub>1</sub> - x<sub>3</sub>) - y<sub>1</sub>
-<pre>
+</pre>
 
 ## 2.10 마지막 예외 처리 코딩하기
 다음과 같이 접신이 x축에 수직인 경우의 예외처리가 필요함
@@ -346,4 +346,5 @@ class Point:
     if self == other and self.y == 0 * self.x: ❶
        return self.__class__(None, None, self.a, self.b)
  ```
- > ❶ 두 점이 같고 y 좌표가 0이면 무한우너점을 
+ > ❶ 두 점이 같고 y 좌표가 0이면 무한원점을 반환
+ 
