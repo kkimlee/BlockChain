@@ -300,13 +300,16 @@ y<sub>3</sub>은 직선이 곡선과 만나는 교점의 y 값과 반대의 부�
     모든 항을 미지수와 x의 차수에 따라 항을 모아 내림차순으로 정리하면 다음 방정식을 얻음
     
         x<sup>3</sup> - s<sup>2</sup>x<sup>2</sup> + (a + 2s<sup>2</sup>x<sub>1</sub> - 2sy<sub>1</sub>)x + b - s<sup>2</sup>x<sub>1</sub><sup>2</sup> + 2sx<sub>1</sub>y<sub>1</sub> - y<sub>1</sub><sup>2</sup> = 0
+        
     x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>은 이 방정식을 만족하는 근으로 다음과 같은 형식이어야 함
      
         (x - x<sub>1</sub>)(x - x<sub>2</sub>)(x - x<sub>3</sub>) = 0
         x<sup>3</sup> - (x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub>)x<sup>2</sup> + (x<sub>1</sub>x<sub>2</sub> + x<sub>1</sub>x<sub>3</sub> + x<sub>2</sub>x<sub>3</sub>)x - x<sub>1</sub>x<sub>2</sub>x<sub>3</sub> = 0
+        
     위 식은 다음과 같이 쓸 수 있음
     
         x<sup>3</sup> - s<sup>2</sup>x<sup>2</sup> + (a + 2s<sup>2</sup>x<sub>1</sub> - 2sy<sub>1</sub>)x + b - s<sup>2</sup>x<sub>1</sub><sup>2</sup> + 2sx<sub>1</sub>y<sub>1</sub> - y<sub>1</sub><sup>2</sup> = 0
+        
     근과 계수와의 관계<sup>Vieta's formulas</sup>에서 근이 같은 두 방정식에서 미지수 x의 같은 차수의 계수들은 서로 같아야함
     x<sup>2</sup>의 계수들을 등치시키면 다음과 같은 식을 얻을 수 있음
     
