@@ -38,5 +38,86 @@ F<sub>103</sub>에서 정의된 타원곡선 방정식 y<sup>2</sup> = x<sup>3</
   
 ![그림 3-2](./그림/그림3-2.png)  
 ###### [그림 3-2] 유한체에서 정의된 타원곡선
+  
+실수체와 달리 유한체의 원소들은 연속적이지 않기 때문에 이와 같은 결과가 나타남  
+유한체에는 음수가 없기 때문에 x축 대칭이 나타나지 않으며, 타원곡선의 y<sup>2</sup>으로 인해 y축의 중간값(100)을 지나는 수평축을 기준으로 대칭이 나타남  
+그러나 유한체에서 정의된 각종 연산을 점 덧셈 방정식에 사용할 수는 있음  
 
+## 3.3 유한체에서 정의된 타원곡선 코딩하기
+타원곡선의 점을 정의하고 유한체에서의 +,-,＊,/, 연산자를 정의했기 때문에 점의 좌표가 유한체 원소인 타원곡선의 점을 표현하기 위해서 아래와 같이 2개의 클래스를 활용해야 함  
+  
+```
+>>> from ecc import FieldElement, Point
+>>> a = FieldElement(num=0, prime=223)
+>>> b = FieldElement(num=7, prime=223)
+>>> x = FieldElement(num=192, prime=223)
+>>> y = FieldElement(num=105, prime=223)
+>>> p1 = Point(x, y, a, b)
+>>> print(p1)
+Point(192,105)_0_7 FieldElement(223)
+```
+  
+Point 클래스의 인스턴스를 초기화할 때 아래 코드가 실행됨  
 
+```
+class Point:
+    def __init__(self, x, y, a, b):
+        self.a = a
+        self.b = b
+        self.x = x
+        self.y = y
+        if self.x is None and self.y is None:
+            return
+        if self.y**2 != self.x**3 + a * x + b:
+            raise ValueError('({}, {}) is not on the curve'.format(x, y))
+```
+  
+덧셈(+), 곱셈(＊), 거듭제곱(＊＊), 같지 않음을 나타내는 비교 연산자(!=)는 내장 연산자가 아닌 FieldElement 클래스에서 정의된 __add__, __mul__, __pow__, __ne__ 메서드를 사용함
+  
+타원곡선 위 점의 좌표를 유한체로 표현하기 위해 2개의 클래스(FieldElement, Point)를 작성하였으며, 다음 코드를 이용해 테스트 가능함  
+  
+```
+class ECCTest(TestCase):
+    
+    def test_on_curve(self):
+        prime = 223
+        a = FieldElement(0, prime)
+        b = FieldElement(7, prime)
+        valid_points = ((192, 105), (17, 56), (1, 193))
+        invalid_points = ((200, 119), (42, 99))
+        for x_raw, y_raw in valid_points:
+            x = FieldElement(x_raw, prime)
+            y = FieldElement(y_raw, prime)
+            Point(x, y, a, b) ①
+        for x_raw, y_raw in invalid_points:
+            x = FieldElement(x_raw, prime)
+            y = FieldElement(y_raw, prime)
+            with self.assertRaises(ValueError):
+                Point(x, y, a, b) ①
+```
+  
+> ① FieldElement 객체를 Point 클래스 생성자의 매개변수로 넘김. 이후 생성자 안에서 코드 실행시 FieldElement 에서 정의된 수학 연산자가 적용됨
+  
+정의가 완료된 후 다음과 같이 테스트 코드 실행이 가능해짐  
+  
+```
+>>> import ecc
+>>> from helper import run ①
+>>> run(ecc.ECCTest('test_on_curve'))
+.
+________________________________________________________
+Ran 1 test in 0.001s
+
+OK
+```
+  
+① helper 모듈은 단위 테스트를 실행시키는 함수(run)를 포함해서 매우 유용한 유틸리티 함수들을 제공함  
+
+## 3.4 유한체에서 정의된 타원곡선 위 두 점의 덧셈
+아래 직선의 방정식을 포함하여 모든 방정식을 유한체에서 사용할 수 있음  
+  
+<pre>
+    y = mx + b
+</pre>
+
+직선은 [그림 3-3]과 같이
